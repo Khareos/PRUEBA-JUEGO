@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esquivar Obstáculos</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        canvas {
+            border: 2px solid #fff;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="400" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const shipWidth = 50;
+        const shipHeight = 20;
+        let shipX = canvas.width / 2 - shipWidth / 2;
+        let shipY = canvas.height - 50;
+        let asteroidRadius = 15;
+        let asteroidSpeed = 3;
+        let asteroidX = Math.random() * (canvas.width - asteroidRadius * 2) + asteroidRadius;
+        let asteroidY = 0 - asteroidRadius;
+        let score = 0;
+        let gameOver = false;
+
+        function drawShip() {
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(shipX, shipY, shipWidth, shipHeight);
+        }
+
+        function drawAsteroid() {
+            ctx.beginPath();
+            ctx.arc(asteroidX, asteroidY, asteroidRadius, 0, Math.PI * 2);
+            ctx.fillStyle = '#ff0000';
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function drawScore() {
+            ctx.fillStyle = '#fff';
+            ctx.font = '24px Arial';
+            ctx.fillText('Puntaje: ' + score, 10, 30);
+        }
+
+        function drawGameOver() {
+            ctx.fillStyle = '#fff';
+            ctx.font = '36px Arial';
+            ctx.fillText('Game Over', canvas.width / 2 - 100, canvas.height / 2 - 50);
+            ctx.fillText('Puntaje final: ' + score, canvas.width / 2 - 120, canvas.height / 2);
+        }
+
+        function detectCollision() {
+            let shipTop = shipY;
+            let shipBottom = shipY + shipHeight;
+            let shipLeft = shipX;
+            let shipRight = shipX + shipWidth;
+
+            let asteroidTop = asteroidY - asteroidRadius;
+            let asteroidBottom = asteroidY + asteroidRadius;
+            let asteroidLeft = asteroidX - asteroidRadius;
+            let asteroidRight = asteroidX + asteroidRadius;
+
+            if (
+                shipBottom > asteroidTop &&
+                shipTop < asteroidBottom &&
+                shipRight > asteroidLeft &&
+                shipLeft < asteroidRight
+            ) {
+                gameOver = true;
+            }
+        }
+
+        function update() {
+            if (!gameOver) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                drawShip();
+                drawAsteroid();
+                drawScore();
+
+                asteroidY += asteroidSpeed;
+
+                if (asteroidY > canvas.height + asteroidRadius) {
+                    asteroidX = Math.random() * (canvas.width - asteroidRadius * 2) + asteroidRadius;
+                    asteroidY = 0 - asteroidRadius;
+                    score++;
+                }
+
+                detectCollision();
+
+                if (gameOver) {
+                    drawGameOver();
+                } else {
+                    requestAnimationFrame(update);
+                }
+            }
+        }
+
+        function restartGame() {
+            score = 0;
+            shipX = canvas.width / 2 - shipWidth / 2;
+            asteroidY = 0 - asteroidRadius;
+            gameOver = false;
+            update();
+        }
+
+        canvas.addEventListener('click', function(event) {
+            if (gameOver) {
+                restartGame();
+            }
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (!gameOver) {
+                if (event.key === 'ArrowLeft' && shipX > 0) {
+                    shipX -= 20;
+                } else if (event.key === 'ArrowRight' && shipX < canvas.width - shipWidth) {
+                    shipX += 20;
+                }
+            }
+        });
+
+        canvas.addEventListener('touchstart', function(event) {
+            const touchX = event.touches[0].clientX - canvas.getBoundingClientRect().left;
+            if (gameOver) {
+                restartGame();6
+            } else {
+                if (touchX < canvas.width / 2) {
+                    if (shipX > 0) {
+                        shipX -= 20;
+                    }
+                } else {
+                    if (shipX < canvas.width - shipWidth) {
+                        shipX += 20;
+                    }
+                }
+            }
+        });
+
+        update();
+    </script>
+</body>
+</html>
