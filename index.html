@@ -1,156 +1,209 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Esquivar Obstáculos</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        canvas {
-            border: 2px solid #fff;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=2.0">
+    <title>KhareosShop</title>
+    <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
-    <canvas id="gameCanvas" width="400" height="600"></canvas>
-    <script>
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        const shipWidth = 50;
-        const shipHeight = 20;
-        let shipX = canvas.width / 2 - shipWidth / 2;
-        let shipY = canvas.height - 50;
-        let asteroidRadius = 15;
-        let asteroidSpeed = 3;
-        let asteroidX = Math.random() * (canvas.width - asteroidRadius * 2) + asteroidRadius;
-        let asteroidY = 0 - asteroidRadius;
-        let score = 0;
-        let gameOver = false;
+    
+    <header class="header">
 
-        function drawShip() {
-            ctx.fillStyle = '#fff';
-            ctx.fillRect(shipX, shipY, shipWidth, shipHeight);
-        }
+        <div class="menu container">
+            <a href="#" class="logo">logo</a>
+            <input type="checkbox" id="menu" />
+            <label for="menu">
+                <img src="imagen/kayn.png" alt="menu">
+            </label>
+            <nav class="navbar">
+                <ul>
+                    <li><a href="#">INICIO</a></li>
+                    <li><a href="#">SERVICIOS</a></li>
+                    <li><a href="#">PRODUCTOS</a></li>
+                    <li><a href="#">CONTACTO</a></li>
 
-        function drawAsteroid() {
-            ctx.beginPath();
-            ctx.arc(asteroidX, asteroidY, asteroidRadius, 0, Math.PI * 2);
-            ctx.fillStyle = '#ff0000';
-            ctx.fill();
-            ctx.closePath();
-        }
+                </ul>
+            </nav>
+        </div>
+        
+        <div class="header-content container">
+            <div class="header-txt">
+                <h1>Compra tu <span>Juego</span> <br> Favorito Aqui</h1>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                    Maiores nam quam blanditiis, qui nisi quod corporis? 
+                    Sed officia autem dolorem iusto, facere cum. Eos explicabo 
+                    saepe amet! Quisquam, obcaecati molestias.
+                </p>
+                <div class="buttons">
+                    <a href="#" class="btn-1">Información</a>
+                    <a href="#" class="btn-1">Juegos</a>
+                </div>
+             </div>
+        </div>
+    </div>
 
-        function drawScore() {
-            ctx.fillStyle = '#fff';
-            ctx.font = '24px Arial';
-            ctx.fillText('Puntaje: ' + score, 10, 30);
-        }
+    </header>
+    <section class="Popular container">
+        <h2>Juegos Populares</h2>
+        <div class="Popular content">
+            <img src="imagen/g1.jpg" alt="">
+            <img src="imagen/g2.jpg" alt="">
+            <img src="imagen/g3.jpg" alt="">
+            <img src="imagen/g4.jpg" alt="">
+            <img src="imagen/g5.jpg" alt="">
+            <img src="imagen/g6.jpg" alt="">
+            <img src="IMAGEN/g7.jpg" alt="">
 
-        function drawGameOver() {
-            ctx.fillStyle = '#fff';
-            ctx.font = '36px Arial';
-            ctx.fillText('Game Over', canvas.width / 2 - 100, canvas.height / 2 - 50);
-            ctx.fillText('Puntaje final: ' + score, canvas.width / 2 - 120, canvas.height / 2);
-        }
+        </div>
+        
+    </section>
 
-        function detectCollision() {
-            let shipTop = shipY;
-            let shipBottom = shipY + shipHeight;
-            let shipLeft = shipX;
-            let shipRight = shipX + shipWidth;
+    <main class="product container">
+        <h2>Todos los juegos</h2>
 
-            let asteroidTop = asteroidY - asteroidRadius;
-            let asteroidBottom = asteroidY + asteroidRadius;
-            let asteroidLeft = asteroidX - asteroidRadius;
-            let asteroidRight = asteroidX + asteroidRadius;
+        <div class="product-content">
+            <div class="Product-1">
+                <img src="Imagen/I1.jpg" alt="">
+                <div class="Product-txt">
+                    <h3>Juego Lorem</h3>
+                    <div class="price">
+                        <p>$100</p>
+                        <a href="#" class="btn-2">Comprar</a>
+                    </div>
+                </div>
 
-            if (
-                shipBottom > asteroidTop &&
-                shipTop < asteroidBottom &&
-                shipRight > asteroidLeft &&
-                shipLeft < asteroidRight
-            ) {
-                gameOver = true;
-            }
-        }
+            </div>
+        </div>
 
-        function update() {
-            if (!gameOver) {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
+        <div class="product-content">
+            <div class="Product-1">
+                <img src="Imagen/I2.jpg" alt="">
+                <div class="Product-txt">
+                    <h3>Juego Lorem</h3>
+                    <div class="price">
+                        <p>$100</p>
+                        <a href="#" class="btn-2">Comprar</a>
+                    </div>
+                </div>
 
-                drawShip();
-                drawAsteroid();
-                drawScore();
+            </div>
 
-                asteroidY += asteroidSpeed;
+        <div class="product-content">
+            <div class="Product-1">
+                <img src="Imagen/I3.jpg" alt="">
+                <div class="Product-txt">
+                    <h3>Juego Lorem</h3>
+                    <div class="price">
+                        <p>$100</p>
+                        <a href="#" class="btn-2">Comprar</a>
+                    </div>
+             </div>
 
-                if (asteroidY > canvas.height + asteroidRadius) {
-                    asteroidX = Math.random() * (canvas.width - asteroidRadius * 2) + asteroidRadius;
-                    asteroidY = 0 - asteroidRadius;
-                    score++;
-                }
+         <div class="product-content">
+             <div class="Product-1">
+                <img src="Imagen/I4.jpg" alt="">
+                <div class="Product-txt">
+                     <h3>Juego Lorem</h3>
+                        <div class="price">
+                          <p>$100</p>
+                          <a href="#" class="btn-2">Comprar</a>
+                    </div>
+                </div>
 
-                detectCollision();
+         <div class="product-content">
+             <div class="Product-1">
+                <img src="Imagen/I5.jpg" alt="">
+                <div class="Product-txt">
+                    <h3>Juego Lorem</h3>
+                        <div class="price">
+                            <p>$100</p>
+                            <a href="#" class="btn-2">Comprar</a>
+                    </div>
+                 </div>
 
-                if (gameOver) {
-                    drawGameOver();
-                } else {
-                    requestAnimationFrame(update);
-                }
-            }
-        }
+        <div class="product-content">
+            <div class="Product-1">
+                <img src="Imagen/I6.jpg" alt="">
+                <div class="Product-txt">
+                     <h3>Juego Lorem</h3>
+                         <div class="price">
+                             <p>$100</p>
+                             <a href="#" class="btn-2">Comprar</a>
+                    </div>
+                 </div>
 
-        function restartGame() {
-            score = 0;
-            shipX = canvas.width / 2 - shipWidth / 2;
-            asteroidY = 0 - asteroidRadius;
-            gameOver = false;
-            update();
-        }
+        <div class="product-content">
+            <div class="Product-1">
+                 <img src="Imagen/I7.jpg" alt="">
+                <div class="Product-txt">
+                     <h3>Juego Lorem</h3>
+                         <div class="price">
+                             <p>$100</p>
+                            <a href="#" class="btn-2">Comprar</a>
+                    </div>
+                </div>
 
-        canvas.addEventListener('click', function(event) {
-            if (gameOver) {
-                restartGame();
-            }
-        });
+        <div class="product-content">
+            <div class="Product-1">
+                <img src="Imagen/I8.jpg" alt="">
+                <div class="Product-txt">
+                    <h3>Juego Lorem</h3>
+                        <div class="price">
+                             <p>$100</p>
+                            <a href="#" class="btn-2">Comprar</a>
+                    </div>
+                 </div>
 
-        document.addEventListener('keydown', function(event) {
-            if (!gameOver) {
-                if (event.key === 'ArrowLeft' && shipX > 0) {
-                    shipX -= 20;
-                } else if (event.key === 'ArrowRight' && shipX < canvas.width - shipWidth) {
-                    shipX += 20;
-                }
-            }
-        });
+        <div class="product-content">
+            <div class="Product-1">
+                 <img src="Imagen/I9.jpg" alt="">
+                <div class="Product-txt">
+                    <h3>Juego Lorem</h3>
+                        <div class="price">
+                             <p>$100</p>
+                            <a href="#" class="btn-2">Comprar</a>
+                    </div>
+                </div>
 
-        canvas.addEventListener('touchstart', function(event) {
-            const touchX = event.touches[0].clientX - canvas.getBoundingClientRect().left;
-            if (gameOver) {
-                restartGame();6
-            } else {
-                if (touchX < canvas.width / 2) {
-                    if (shipX > 0) {
-                        shipX -= 20;
-                    }
-                } else {
-                    if (shipX < canvas.width - shipWidth) {
-                        shipX += 20;
-                    }
-                }
-            }
-        });
+        
+           </div>
 
-        update();
-    </script>
+    </main>
+
+    <section class="contac container">
+
+        <div class="contact-content">
+            <h3>Subscribete a nuestro Blog</h3>
+            <form> 
+                <input type="Email" placeholder="Escribe tu correo">
+                <input type="Submit" class="ntn-3" value="Enviar"> 
+            </form>
+        </div>
+
+    </section>
+
+    <footer class="footer container">
+
+        <div class="link">
+            <a href="#" class="logo">logo</a>
+        </div>
+        
+        <div class="link">
+            <ul>
+                <li><a href="#">INICIO</a></li>
+                <li><a href="#">SERVICIOS</a></li>
+                <li><a href="#">PRODUCTOS</a></li>
+                <li><a href="#">CONTACTO</a></li>
+
+            </ul>
+
+        
+
+        </div>
+
+    </footer>
+
 </body>
 </html>
